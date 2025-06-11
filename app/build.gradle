@@ -17,12 +17,10 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // This dependency is used by the application.
     implementation libs.guava
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -39,8 +37,8 @@ application {
 
 javafx{
  version = "21"
- modules = ['javafx.controls']
+ modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-
+sourceSets.main.resources.srcDirs = ['src/main/resources']
 
