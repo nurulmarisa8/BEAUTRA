@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CartController" alignment="TOP_CENTER" prefHeight="550.0" prefWidth="500.0" spacing="15.0" style="-fx-background-color: #fcfcfc;">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Text text="Keranjang Belanja" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #333333;" />
+      
+      <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+         <content>
+            <VBox fx:id="cartBox" spacing="10.0" />
+         </content>
+      </ScrollPane>
+      
+      <VBox spacing="10.0" style="-fx-border-color: #eeeeee; -fx-border-width: 2 0 0 0; -fx-padding: 15 0 0 0;">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Total Harga:" style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Label fx:id="cartTotalValue" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Rp0" />
+            </HBox>
+            <Button fx:id="checkoutBtn" maxWidth="1.7976931348623157E308" prefHeight="45.0" text="Lanjut ke Checkout" style="-fx-background-color: #ff6666; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-font-size: 16px; -fx-cursor: hand;" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
