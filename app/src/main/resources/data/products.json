@@ -1,0 +1,24 @@
+[
+  {
+    "id": "P-66133CAD",
+    "name": "Bath and Body Works",
+    "category": "BodyCare",
+    "brand": "",
+    "description": "produk bagus",
+    "image": "/images/Bath and Body Works.jpg",
+    "sellerId": "USR-E264F876",
+    "price": 100000.0,
+    "stock": 200
+  },
+  {
+    "id": "P-433AC243",
+    "name": "Love Beauty \u0026 Planet",
+    "category": "BodyCare",
+    "brand": "",
+    "description": "baugs banget",
+    "image": "/images/Love Beauty \u0026 Planet.png",
+    "sellerId": "USR-E264F876",
+    "price": 25000.0,
+    "stock": 1000
+  }
+]
