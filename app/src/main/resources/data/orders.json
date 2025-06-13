@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ORD-6EEB1271",
+    "buyerId": "USR-B05BAFEF",
+    "items": [
+      {
+        "productId": "P-66133CAD",
+        "quantity": 1,
+        "price": 100000.0
+      },
+      {
+        "productId": "P-433AC243",
+        "quantity": 1,
+        "price": 25000.0
+      }
+    ],
+    "total": 125000.0,
+    "status": "paid",
+    "timestamp": "2025-06-13T17:19:36.980860400",
+    "paymentMethod": "COD"
+  },
+  {
+    "id": "ORD-C397D5BD",
+    "buyerId": "USR-B05BAFEF",
+    "items": [
+      {
+        "productId": "P-433AC243",
+        "quantity": 1,
+        "price": 25000.0
+      },
+      {
+        "productId": "P-66133CAD",
+        "quantity": 1,
+        "price": 100000.0
+      }
+    ],
+    "total": 125000.0,
+    "status": "paid",
+    "timestamp": "2025-06-13T17:20:44.685845800",
+    "paymentMethod": "COD"
+  },
+  {
+    "id": "ORD-D222BE04",
+    "buyerId": "USR-B05BAFEF",
+    "items": [
+      {
+        "productId": "P-22AA3C35",
+        "quantity": 1,
+        "price": 20000.0
+      }
+    ],
+    "total": 20000.0,
+    "status": "paid",
+    "timestamp": "2025-06-13T17:22:20.258499",
+    "paymentMethod": "COD"
+  },
+  {
+    "id": "ORD-844E3B1A",
+    "buyerId": "USR-B05BAFEF",
+    "items": [
+      {
+        "productId": "P-22AA3C35",
+        "quantity": 1,
+        "price": 20000.0
+      },
+      {
+        "productId": "P-51E26FD4",
+        "quantity": 1,
+        "price": 20000.0
+      }
+    ],
+    "total": 40000.0,
+    "status": "paid",
+    "timestamp": "2025-06-13T17:23:39.414381700",
+    "paymentMethod": "COD"
+  }
+]

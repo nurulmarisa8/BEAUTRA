@@ -1,0 +1,247 @@
+/* Mengatur warna latar belakang utama untuk seluruh jendela aplikasi */
+.root {
+    -fx-background-color: #ffcccc;
+    background-color: #ffcccc;
+}
+
+/* Gaya untuk kartu produk di halaman utama */
+.card {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-background-radius: 22; /* Sudut melengkung */
+    -fx-effect: dropshadow(gaussian, #fcb0b1, 18, 0.18, 0, 8); /* Efek bayangan */
+}
+
+/* Gaya dasar yang sama untuk semua tombol kategori (aktif maupun tidak) */
+.soft-btn, .category-btn-active {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-background-radius: 24;
+    
+    /* PERBAIKAN: Menambahkan border-radius agar simetris */
+    -fx-border-radius: 24; 
+    border-radius: 24%;
+
+    -fx-font-size: 18px;
+    font-size: 18px;
+    -fx-text-fill: #ff6666; /* Warna teks */
+    color: #ff6666;
+    -fx-font-weight: normal;
+    font-weight: normal;
+    -fx-border-color: #ff6666; /* Warna garis tepi */
+    border-color: #ff6666;
+    -fx-border-width: 2px;
+    border-width: 2px;
+    -fx-effect: dropshadow(gaussian, #ffcccc, 6, 0.12, 0, 2);
+    -fx-min-width: 110px;
+    min-width: 110px;
+    -fx-pref-width: 120px;
+    -fx-padding: 6 18 6 18;
+    padding: 6px 18px;
+    
+    /* Menghilangkan border biru bawaan saat tombol di-klik */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Gaya spesifik untuk tombol kategori yang TIDAK aktif */
+.soft-btn {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-font-weight: normal;
+    font-weight: normal;
+}
+
+/* Gaya saat kursor berada di atas tombol kategori yang tidak aktif */
+.soft-btn:hover, .soft-btn:focused {
+    -fx-background-color: #ffeaea;
+    background-color: #ffeaea;
+    -fx-effect: dropshadow(gaussian, #ffb3b3, 10, 0.18, 0, 4);
+    -fx-cursor: hand; /* Mengubah kursor menjadi bentuk tangan */
+    cursor: hand;
+}
+
+/* Gaya spesifik untuk tombol kategori yang SEDANG aktif */
+.category-btn-active {
+    -fx-background-color: #fff6f2;
+    background-color: #fff6f2;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 204, 204, 0.5), 10, 0, 0, 4);
+}
+
+/* Gaya saat kursor berada di atas tombol kategori yang sedang aktif */
+.category-btn-active:hover, .category-btn-active:focused {
+    -fx-background-color: #ffeaea;
+    background-color: #ffeaea;
+    -fx-effect: dropshadow(gaussian, #ff9999, 16, 0.22, 0, 6);
+    -fx-cursor: hand;
+    cursor: hand;
+}
+
+/* Gaya untuk tombol ikon keranjang (cart) */
+.cart-btn {
+    -fx-background-color: #ffffff;
+    background-color: #ffffff;
+    -fx-background-radius: 50; /* Radius besar untuk memastikan bentuk lingkaran */
+    -fx-border-radius: 50;     /* Menyamakan radius border */
+    border-radius: 50%;
+    -fx-pref-width: 44px;      /* Ukuran lebar tetap */
+    -fx-pref-height: 44px;     /* Ukuran tinggi tetap */
+    -fx-padding: 8px;          /* Padding agar ikon di tengah */
+    padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 3);
+    -fx-cursor: hand;          
+    cursor: hand;
+}
+
+/* Gaya saat kursor di atas tombol ikon keranjang */
+.cart-btn:hover {
+    -fx-background-color: #fff6f2; 
+    background-color: #fff6f2;
+    -fx-effect: dropshadow(gaussian, rgba(255,102,102,0.2), 15, 0, 0, 4);
+}
+
+/* =================================================================== */
+/* Styling untuk Halaman Checkout                                      */
+/* =================================================================== */
+
+/* Gaya untuk kartu konten di halaman checkout */
+.content-card {
+    -fx-background-color: white;
+    background-color: white;
+    -fx-background-radius: 18;
+    -fx-padding: 25px;
+    padding: 25px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+/* Gaya untuk judul di halaman checkout */
+.header-title {
+    -fx-font-size: 24px;
+    font-size: 24px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #ff6666;
+}
+
+/* Gaya untuk label form (seperti "Nama", "Alamat") */
+.form-label {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #555;
+}
+
+/* Gaya untuk input field di form */
+.form-input {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-background-color: white;
+    background-color: white;
+    -fx-border-color: #cccccc;
+    border-color: #cccccc;
+    -fx-border-radius: 8;
+    border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10px;
+    padding: 10px;
+}
+/* Gaya saat input field sedang dalam fokus (diketik) */
+.form-input:focused {
+    -fx-border-color: #ff6666; /* Warna border berubah */
+    border-color: #ff6666;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 102, 0.3), 10, 0, 0, 0); /* Efek glow */
+}
+
+/* Gaya untuk kotak ringkasan pesanan */
+.summary-box {
+    -fx-background-color: #fafafa;
+    background-color: #fafafa;
+    -fx-border-color: #eeeeee;
+    border-color: #eeeeee;
+    -fx-border-width: 1;
+    border-width: 1px;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    border-radius: 8;
+    -fx-padding: 15;
+    padding: 15px;
+}
+
+/* Gaya untuk tombol utama "Place Order" */
+.checkout-button {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 8px 15px;
+    padding: 8px 15px;
+    -fx-font-size: 16px;
+    font-size: 16px;
+    -fx-cursor: hand;
+    cursor: hand;
+}
+.checkout-button:hover {
+    -fx-background-color: #e65c5c;
+    background-color: #e65c5c;
+}
+
+/* =================================================================== */
+/* Styling untuk Notifikasi / Alert Dialog                             */
+/* =================================================================== */
+
+/* Gaya untuk panel utama dialog notifikasi kustom */
+.custom-alert {
+    -fx-background-color: #fcfcfc; 
+    background-color: #fcfcfc;
+    -fx-border-width: 1px;
+    border-width: 1px;
+    -fx-border-color: #ffcccc;
+    border-color: #ffcccc;
+}
+
+/* Mengatur header panel notifikasi */
+.custom-alert .header-panel {
+    -fx-background-color: #fff6f2;
+    background-color: #fff6f2;
+}
+
+/* Mengatur ikon "i" bawaan dari alert informasi */
+.custom-alert .header-panel .label.graphic-container {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-shape: "M 100 100 A 50 50 0 1 1 100 101 Z"; /* Membuatnya bulat */
+    -fx-padding: 10px;
+    padding: 10px;
+}
+
+/* Mengatur teks pesan utama di dalam notifikasi */
+.custom-alert .content.label {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+/* Mengatur tombol "OK" di dalam notifikasi */
+.custom-alert .button {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    cursor: hand;
+    -fx-pref-width: 90px;
+}
+
+.custom-alert .button:hover {
+    -fx-background-color: #e65c5c; 
+    background-color: #e65c5c;
+}
