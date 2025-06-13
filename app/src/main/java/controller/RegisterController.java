@@ -21,12 +21,21 @@ public class RegisterController {
 
     private final AuthService authService = new AuthService();
 
+    /**
+     * Method yang dieksekusi secara otomatis saat FXML selesai dimuat.
+     * Mengisi item pilihan awal untuk ComboBox jenis kelamin dan peran.
+     */
     @FXML
     public void initialize() {
         genderBox.getItems().addAll("Laki-laki", "Perempuan");
         roleBox.getItems().addAll("buyer", "seller");
     }
 
+    /**
+     * Menangani aksi saat tombol registrasi ditekan.
+     * Mengumpulkan semua data dari form, memanggil service untuk mendaftarkan
+     * pengguna baru, lalu menampilkan notifikasi dan kembali ke halaman login.
+     */
     @FXML
     private void handleRegister() {
         authService.register(
@@ -38,12 +47,16 @@ public class RegisterController {
             addressField.getText(),
             roleBox.getValue()
         );
-        // Tampilkan pesan sukses (opsional)
+        // Tampilkan pesan sukses.
         AlertUtil.showInfo("Registrasi berhasil! Silakan login.");
-        // Kembali ke halaman login
+        // Kembali ke halaman login.
         goToLogin();
     }
 
+    /**
+     * Mengarahkan pengguna kembali ke halaman login (login.fxml).
+     * Method ini biasanya terhubung dengan tombol atau link "Sudah punya akun? Login".
+     */
     @FXML
     private void goToLogin() {
         try {

@@ -39,7 +39,8 @@ public class ProductDetailController {
 
     /**
      * Metode utama untuk menginisialisasi halaman detail.
-     * Nama metode diubah menjadi `initializeDetails` untuk menerima data dari HomeController.
+     * Menerima data produk dan referensi keranjang dari HomeController, lalu
+     * mengisi semua komponen UI dengan data tersebut.
      * @param product Produk yang akan ditampilkan.
      * @param cart Keranjang belanja yang sama dengan yang ada di HomeController.
      */
@@ -49,34 +50,34 @@ public class ProductDetailController {
 
         if (product == null) return;
 
-        // Set teks untuk semua label
+        // Set teks untuk semua label di UI.
         nameLabel.setText(product.getName());
         priceLabel.setText("Rp " + String.format("%,.0f", product.getPrice()));
-        // Menghilangkan teks "Kategori: " dan "Stok: " karena sudah ada di FXML
         categoryLabel.setText(product.getCategory()); 
         stockLabel.setText(String.valueOf(product.getStock())); 
         descriptionLabel.setText(product.getDescription());
         descriptionLabel.setWrapText(true);
 
-        // Memuat gambar produk
+        // Memanggil method untuk memuat gambar produk.
         loadProductImage(product.getImage());
 
-        // Mengatur tampilan dan aksi untuk kontrol keranjang
+        // Memanggil method untuk mengatur tombol-tombol interaksi keranjang.
         setupCartControls();
     }
 
     /**
-     * Mengatur logika dan tampilan untuk tombol-tombol keranjang.
+     * Mengatur logika dan tampilan untuk tombol-tombol keranjang (+, -, dan Tambah).
+     * Method ini juga mendefinisikan aksi (event handler) untuk setiap tombol.
      */
     private void setupCartControls() {
-        // Terapkan styling agar konsisten
+        // Terapkan styling agar konsisten.
         String quantityBtnStyle = "-fx-background-color: #ff6666; -fx-text-fill: white; -fx-background-radius: 50; -fx-font-weight: bold; -fx-min-width: 30px; -fx-min-height: 30px; -fx-cursor: hand;";
         minusBtn.setStyle(quantityBtnStyle);
         plusBtn.setStyle(quantityBtnStyle);
         quantityLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         addToCartBtn.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 14px; -fx-cursor: hand; -fx-font-weight: bold;");
 
-        // Logika untuk memperbarui tampilan tombol
+        // Logika untuk memperbarui tampilan tombol (menampilkan tombol 'Tambah' atau '+/-').
         Runnable updateView = () -> {
             Optional<CartItem> itemInCart = findCartItem(currentProduct.getId());
             if (itemInCart.isPresent()) {
@@ -89,7 +90,7 @@ public class ProductDetailController {
             }
         };
 
-        // Atur aksi untuk setiap tombol
+        // Atur aksi untuk setiap tombol.
         addToCartBtn.setOnAction(e -> {
             addItemToCart();
             updateView.run();
@@ -105,16 +106,22 @@ public class ProductDetailController {
             updateView.run();
         });
 
-        // Panggil sekali di awal untuk mengatur tampilan yang benar
+        // Panggil sekali di awal untuk mengatur tampilan yang benar saat jendela dibuka.
         updateView.run();
     }
 
-    // --- Logika Keranjang (diadaptasi dari HomeController) ---
-
+    /**
+     * Mencari item di dalam keranjang berdasarkan ID produk.
+     * @param productId ID produk yang akan dicari.
+     * @return Optional yang berisi CartItem jika ditemukan.
+     */
     private Optional<CartItem> findCartItem(String productId) {
         return cart.stream().filter(ci -> ci.getProductId().equals(productId)).findFirst();
     }
 
+    /**
+     * Menambahkan produk saat ini ke dalam keranjang jika stok tersedia.
+     */
     private void addItemToCart() {
         if (currentProduct.getStock() > 0) {
             cart.add(new CartItem(currentProduct.getId(), 1, currentProduct.getPrice()));
@@ -123,6 +130,9 @@ public class ProductDetailController {
         }
     }
 
+    /**
+     * Menambah kuantitas produk yang sudah ada di keranjang, dengan batas maksimal stok.
+     */
     private void increaseItemQuantity() {
         findCartItem(currentProduct.getId()).ifPresent(item -> {
             if (item.getQuantity() < currentProduct.getStock()) {
@@ -133,6 +143,10 @@ public class ProductDetailController {
         });
     }
 
+    /**
+     * Mengurangi kuantitas produk di keranjang. Jika kuantitas menjadi 1,
+     * item akan dihapus dari keranjang.
+     */
     private void decreaseItemQuantity() {
         findCartItem(currentProduct.getId()).ifPresent(item -> {
             if (item.getQuantity() > 1) {
@@ -143,8 +157,11 @@ public class ProductDetailController {
         });
     }
 
-    // --- Logika untuk Memuat Gambar (tidak berubah) ---
-
+    /**
+     * Memuat gambar produk ke dalam ImageView dari path yang diberikan.
+     * Akan memuat gambar default jika path tidak valid atau terjadi error.
+     * @param imagePath Path lokasi file gambar.
+     */
     private void loadProductImage(String imagePath) {
         try {
             if (imagePath != null && !imagePath.isEmpty()) {
@@ -166,6 +183,9 @@ public class ProductDetailController {
         }
     }
 
+    /**
+     * Memuat gambar default sebagai fallback jika gambar produk utama tidak tersedia.
+     */
     private void loadDefaultImage() {
         try {
             InputStream defaultImageStream = getClass().getResourceAsStream("/images/default-product.png");

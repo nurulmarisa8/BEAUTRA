@@ -1,15 +1,18 @@
+/* Mengatur warna latar belakang utama untuk seluruh jendela aplikasi */
 .root {
     -fx-background-color: #ffcccc;
     background-color: #ffcccc;
 }
 
+/* Gaya untuk kartu produk di halaman utama */
 .card {
     -fx-background-color: #eeeeee;
     background-color: #eeeeee;
-    -fx-background-radius: 22;
-    -fx-effect: dropshadow(gaussian, #fcb0b1, 18, 0.18, 0, 8);
+    -fx-background-radius: 22; /* Sudut melengkung */
+    -fx-effect: dropshadow(gaussian, #fcb0b1, 18, 0.18, 0, 8); /* Efek bayangan */
 }
 
+/* Gaya dasar yang sama untuk semua tombol kategori (aktif maupun tidak) */
 .soft-btn, .category-btn-active {
     -fx-background-color: #eeeeee;
     background-color: #eeeeee;
@@ -21,11 +24,11 @@
 
     -fx-font-size: 18px;
     font-size: 18px;
-    -fx-text-fill: #ff6666;
+    -fx-text-fill: #ff6666; /* Warna teks */
     color: #ff6666;
     -fx-font-weight: normal;
     font-weight: normal;
-    -fx-border-color: #ff6666;
+    -fx-border-color: #ff6666; /* Warna garis tepi */
     border-color: #ff6666;
     -fx-border-width: 2px;
     border-width: 2px;
@@ -36,11 +39,12 @@
     -fx-padding: 6 18 6 18;
     padding: 6px 18px;
     
-    /* Menghilangkan border saat tombol di-klik */
+    /* Menghilangkan border biru bawaan saat tombol di-klik */
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
+/* Gaya spesifik untuk tombol kategori yang TIDAK aktif */
 .soft-btn {
     -fx-background-color: #eeeeee;
     background-color: #eeeeee;
@@ -48,14 +52,16 @@
     font-weight: normal;
 }
 
+/* Gaya saat kursor berada di atas tombol kategori yang tidak aktif */
 .soft-btn:hover, .soft-btn:focused {
     -fx-background-color: #ffeaea;
     background-color: #ffeaea;
     -fx-effect: dropshadow(gaussian, #ffb3b3, 10, 0.18, 0, 4);
-    -fx-cursor: hand;
+    -fx-cursor: hand; /* Mengubah kursor menjadi bentuk tangan */
     cursor: hand;
 }
 
+/* Gaya spesifik untuk tombol kategori yang SEDANG aktif */
 .category-btn-active {
     -fx-background-color: #fff6f2;
     background-color: #fff6f2;
@@ -64,6 +70,7 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 204, 204, 0.5), 10, 0, 0, 4);
 }
 
+/* Gaya saat kursor berada di atas tombol kategori yang sedang aktif */
 .category-btn-active:hover, .category-btn-active:focused {
     -fx-background-color: #ffeaea;
     background-color: #ffeaea;
@@ -72,7 +79,7 @@
     cursor: hand;
 }
 
-/* PERBAIKAN UTAMA UNTUK TOMBOL IKON */
+/* Gaya untuk tombol ikon keranjang (cart) */
 .cart-btn {
     -fx-background-color: #ffffff;
     background-color: #ffffff;
@@ -83,21 +90,23 @@
     -fx-pref-height: 44px;     /* Ukuran tinggi tetap */
     -fx-padding: 8px;          /* Padding agar ikon di tengah */
     padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 3); /* Efek bayangan */
-    -fx-cursor: hand;          /* Mengubah kursor menjadi tangan saat disentuh */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 3);
+    -fx-cursor: hand;          
     cursor: hand;
 }
 
+/* Gaya saat kursor di atas tombol ikon keranjang */
 .cart-btn:hover {
-    -fx-background-color: #fff6f2; /* Warna berubah saat disentuh mouse */
+    -fx-background-color: #fff6f2; 
     background-color: #fff6f2;
-    -fx-effect: dropshadow(gaussian, rgba(255,102,102,0.2), 15, 0, 0, 4); /* Bayangan lebih jelas */
+    -fx-effect: dropshadow(gaussian, rgba(255,102,102,0.2), 15, 0, 0, 4);
 }
 
 /* =================================================================== */
 /* Styling untuk Halaman Checkout                                      */
 /* =================================================================== */
 
+/* Gaya untuk kartu konten di halaman checkout */
 .content-card {
     -fx-background-color: white;
     background-color: white;
@@ -107,6 +116,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
 }
 
+/* Gaya untuk judul di halaman checkout */
 .header-title {
     -fx-font-size: 24px;
     font-size: 24px;
@@ -115,6 +125,7 @@
     -fx-text-fill: #ff6666;
 }
 
+/* Gaya untuk label form (seperti "Nama", "Alamat") */
 .form-label {
     -fx-font-size: 14px;
     font-size: 14px;
@@ -123,6 +134,7 @@
     -fx-text-fill: #555;
 }
 
+/* Gaya untuk input field di form */
 .form-input {
     -fx-font-size: 14px;
     font-size: 14px;
@@ -136,12 +148,14 @@
     -fx-padding: 10px;
     padding: 10px;
 }
+/* Gaya saat input field sedang dalam fokus (diketik) */
 .form-input:focused {
-    -fx-border-color: #ff6666;
+    -fx-border-color: #ff6666; /* Warna border berubah */
     border-color: #ff6666;
-    -fx-effect: dropshadow(gaussian, rgba(255, 102, 102, 0.3), 10, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 102, 0.3), 10, 0, 0, 0); /* Efek glow */
 }
 
+/* Gaya untuk kotak ringkasan pesanan */
 .summary-box {
     -fx-background-color: #fafafa;
     background-color: #fafafa;
@@ -156,6 +170,7 @@
     padding: 15px;
 }
 
+/* Gaya untuk tombol utama "Place Order" */
 .checkout-button {
     -fx-background-color: #ff6666;
     background-color: #ff6666;
@@ -179,8 +194,9 @@
 /* Styling untuk Notifikasi / Alert Dialog                             */
 /* =================================================================== */
 
+/* Gaya untuk panel utama dialog notifikasi kustom */
 .custom-alert {
-    -fx-background-color: #fcfcfc; /* Warna latar dialog */
+    -fx-background-color: #fcfcfc; 
     background-color: #fcfcfc;
     -fx-border-width: 1px;
     border-width: 1px;
@@ -188,13 +204,13 @@
     border-color: #ffcccc;
 }
 
-/* Mengatur header panel (meskipun teksnya kita hilangkan, warnanya tetap ada) */
+/* Mengatur header panel notifikasi */
 .custom-alert .header-panel {
     -fx-background-color: #fff6f2;
     background-color: #fff6f2;
 }
 
-/* Mengatur ikon "i" bawaan */
+/* Mengatur ikon "i" bawaan dari alert informasi */
 .custom-alert .header-panel .label.graphic-container {
     -fx-background-color: #ff6666;
     background-color: #ff6666;
@@ -203,7 +219,7 @@
     padding: 10px;
 }
 
-/* Mengatur teks pesan utama */
+/* Mengatur teks pesan utama di dalam notifikasi */
 .custom-alert .content.label {
     -fx-font-size: 14px;
     font-size: 14px;
@@ -212,7 +228,7 @@
     -fx-text-fill: #555555;
 }
 
-/* Mengatur tombol "OK" */
+/* Mengatur tombol "OK" di dalam notifikasi */
 .custom-alert .button {
     -fx-background-color: #ff6666;
     background-color: #ff6666;
@@ -226,6 +242,6 @@
 }
 
 .custom-alert .button:hover {
-    -fx-background-color: #e65c5c; /* Warna saat disentuh mouse */
+    -fx-background-color: #e65c5c; 
     background-color: #e65c5c;
 }

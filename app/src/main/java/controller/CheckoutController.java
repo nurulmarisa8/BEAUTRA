@@ -46,7 +46,9 @@ public class CheckoutController {
     //======================================================================
 
     /**
-     * Method ini dipanggil dari HomeController untuk memulai proses checkout.
+     * Method utama yang dipanggil dari HomeController untuk memulai proses checkout.
+     * Method ini menerima data keranjang, menampilkan ringkasan pesanan, mengisi opsi
+     * pembayaran, dan mengatur aksi untuk tombol pemesanan.
      * @param cartData Keranjang belanja dari halaman sebelumnya.
      * @param buyerId ID pengguna yang melakukan checkout.
      */
@@ -63,18 +65,13 @@ public class CheckoutController {
         // Menetapkan aksi untuk tombol "Place Order"
         placeOrderBtn.setOnAction(e -> {
             
-            // Langkah 1: Validasi input pengguna
-            // Pastikan semua field pengiriman sudah diisi.
+            // Langkah 1: Validasi input pengguna untuk memastikan semua field terisi.
             if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || addressField.getText().isEmpty()) {
                 AlertUtil.showInfo("Harap lengkapi semua data pengiriman!");
                 return; // Hentikan proses jika data tidak lengkap
             }
 
-            // Langkah 2: Delegasikan proses ke Service Layer
-            // Cukup panggil satu method ini. OrderService akan menangani semuanya:
-            // - Membuat pesanan dengan ID unik.
-            // - Mengurangi stok produk (hanya sekali).
-            // - Menyimpan transaksi ke file orders.json dengan format yang benar.
+            // Langkah 2: Panggil service untuk membuat pesanan, mengurangi stok, dan menyimpan data.
             orderService.createOrder(this.cart, buyerId);
             
             // Langkah 3: Beri notifikasi ke pengguna dan tutup jendela checkout
@@ -85,15 +82,16 @@ public class CheckoutController {
 
 
     /**
-     * Method ini hanya untuk memperbarui TAMPILAN ringkasan pesanan di UI.
-     * Tidak ada logika bisnis di sini.
+     * Method privat yang bertugas untuk memperbarui tampilan ringkasan pesanan di UI.
+     * Method ini mengkalkulasi subtotal dari item di keranjang dan menampilkan total
+     * biaya beserta ongkos kirim. Tidak ada logika bisnis di sini.
      */
     private void updateOrderSummary() {
         orderSummaryBox.getChildren().clear();
         double subtotal = 0;
 
         for (CartItem ci : cart) {
-            // Cari nama produk untuk ditampilkan
+            // Cari nama produk berdasarkan ID untuk ditampilkan
             Product p = productService.getProductById(ci.getProductId());
 
             // Buat baris tampilan untuk setiap item

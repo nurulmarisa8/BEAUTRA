@@ -44,9 +44,14 @@ public class HomeController {
     private List<Product> allProducts;
     private final List<CartItem> cart = new ArrayList<>();
 
+    /**
+     * Method yang dieksekusi secara otomatis saat FXML selesai dimuat.
+     * Menginisialisasi state awal controller, seperti mengambil semua data produk,
+     * menambahkan listener ke search field, dan menampilkan produk awal.
+     */
     @FXML
     public void initialize() {
-        // Inisialisasi instance statis
+        // Inisialisasi instance statis untuk bisa diakses dari controller lain.
         instance = this;
 
         allProducts = productService.getAllProducts();
@@ -55,19 +60,30 @@ public class HomeController {
         setActiveCategory(forYouBtn);
     }
 
+    /**
+     * Mengembalikan instance dari HomeController yang sedang aktif.
+     * Digunakan untuk memungkinkan controller lain memanggil method publik di sini,
+     * seperti refreshProducts().
+     * @return instance dari HomeController.
+     */
     public static HomeController getInstance() {
         return instance;
     }
 
     /**
-     * Metode ini sekarang hanya bertugas memuat ulang data produk dari sumbernya
-     * dan menampilkan ulang ke UI. Pengosongan keranjang dipisahkan.
+     * Memuat ulang data produk dari sumbernya (JSON) dan menampilkan ulang ke UI.
+     * Method ini berguna untuk me-refresh tampilan setelah ada perubahan data,
+     * misalnya setelah checkout atau menutup jendela detail produk.
      */
     public void refreshProducts() {
         allProducts = productService.getAllProducts();
         showProducts(allProducts);
     }
 
+    /**
+     * Menyaring daftar produk berdasarkan teks pencarian dan memperbarui grid.
+     * @param searchText Teks yang diketik pengguna di search field.
+     */
     private void searchProducts(String searchText) {
         List<Product> filteredList;
         if (searchText == null || searchText.trim().isEmpty()) {
@@ -82,6 +98,11 @@ public class HomeController {
         showProducts(filteredList);
     }
 
+    /**
+     * Menampilkan daftar produk ke dalam FlowPane (productGrid).
+     * Method ini akan menghapus semua produk lama dan mengisi grid dengan produk baru.
+     * @param products List produk yang akan ditampilkan.
+     */
     private void showProducts(List<Product> products) {
         productGrid.getChildren().clear();
         for (Product product : products) {
@@ -89,6 +110,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Membuat satu kartu (card) produk secara dinamis untuk ditampilkan di grid.
+     * Kartu ini berisi gambar, nama, harga, stok, dan tombol interaksi keranjang.
+     * @param product Objek produk yang datanya akan ditampilkan.
+     * @return VBox yang merupakan representasi visual dari kartu produk.
+     */
     private VBox createProductCard(Product product) {
         VBox card = new VBox(8);
         card.setPrefWidth(180);
@@ -100,6 +127,7 @@ public class HomeController {
         imageView.setFitHeight(120);
         imageView.setPreserveRatio(true);
 
+        // Memuat gambar produk dengan penanganan error jika gambar tidak ditemukan.
         try {
             String imagePath = product.getImage();
             if (imagePath != null && !imagePath.isEmpty()) {
@@ -124,11 +152,13 @@ public class HomeController {
 
         Label stockLabel = new Label("Stok: " + product.getStock());
         stockLabel.setStyle("-fx-text-fill: #666666; -fx-font-size: 11px;");
-
+        
+        // Kontrol untuk menambah item ke keranjang.
         Button addToCartBtn = new Button("+ Keranjang");
         addToCartBtn.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 11px; -fx-cursor: hand;");
         addToCartBtn.setPrefWidth(150);
-
+        
+        // Kontrol untuk mengubah kuantitas item (kurang/tambah).
         Label quantityLabel = new Label();
         quantityLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
@@ -143,7 +173,8 @@ public class HomeController {
         
         StackPane cartControlContainer = new StackPane(addToCartBtn, quantityControlBox);
         cartControlContainer.setAlignment(Pos.CENTER);
-
+        
+        // Logika untuk menampilkan tombol 'tambah' atau kontrol kuantitas.
         Runnable updateView = () -> {
             Optional<CartItem> itemInCart = findCartItem(product.getId());
             if (itemInCart.isPresent()) {
@@ -174,6 +205,7 @@ public class HomeController {
         updateView.run();
 
         card.getChildren().addAll(imageView, nameLabel, priceLabel, stockLabel, cartControlContainer);
+        // Menambahkan aksi klik pada kartu untuk membuka detail produk.
         card.setOnMouseClicked(event -> {
              if (event.getTarget() instanceof Button || event.getTarget() instanceof Label) return;
              showProductDetail(product);
@@ -181,10 +213,19 @@ public class HomeController {
         return card;
     }
 
+    /**
+     * Mencari item di dalam keranjang berdasarkan ID produk.
+     * @param productId ID produk yang dicari.
+     * @return Optional yang berisi CartItem jika ditemukan, atau kosong jika tidak.
+     */
     private Optional<CartItem> findCartItem(String productId) {
         return cart.stream().filter(ci -> ci.getProductId().equals(productId)).findFirst();
     }
 
+    /**
+     * Menambahkan produk ke dalam keranjang dengan kuantitas awal 1.
+     * @param product Produk yang akan ditambahkan.
+     */
     private void addItemToCart(Product product) {
         if (product.getStock() > 0) {
             cart.add(new CartItem(product.getId(), 1, product.getPrice()));
@@ -193,6 +234,10 @@ public class HomeController {
         }
     }
 
+    /**
+     * Menambah kuantitas item yang sudah ada di keranjang sebanyak 1.
+     * @param product Produk yang kuantitasnya akan ditambah.
+     */
     private void increaseItemQuantity(Product product) {
         findCartItem(product.getId()).ifPresent(item -> {
             if (item.getQuantity() < product.getStock()) {
@@ -203,6 +248,11 @@ public class HomeController {
         });
     }
 
+    /**
+     * Mengurangi kuantitas item yang sudah ada di keranjang sebanyak 1.
+     * Jika kuantitas menjadi 0, item akan dihapus dari keranjang.
+     * @param product Produk yang kuantitasnya akan dikurangi.
+     */
     private void decreaseItemQuantity(Product product) {
         findCartItem(product.getId()).ifPresent(item -> {
             if (item.getQuantity() > 1) {
@@ -213,12 +263,22 @@ public class HomeController {
         });
     }
     
+    /** Aksi saat tombol filter 'For You' diklik. */
     @FXML private void onForYou() { setActiveCategory(forYouBtn); showProducts(allProducts); }
+    /** Aksi saat tombol filter 'SkinCare' diklik. */
     @FXML private void onSkinCare() { filterByCategory("SkinCare", skinCareBtn); }
+    /** Aksi saat tombol filter 'BodyCare' diklik. */
     @FXML private void onBodyCare() { filterByCategory("BodyCare", bodyCareBtn); }
+    /** Aksi saat tombol filter 'Hair Care' diklik. */
     @FXML private void onHairCare() { filterByCategory("Hair Care", hairCareBtn); }
+    /** Aksi saat tombol filter 'Make Up' diklik. */
     @FXML private void onMakeUp() { filterByCategory("Make Up", makeUpBtn); }
 
+    /**
+     * Method helper untuk menyaring produk berdasarkan kategori dan memperbarui UI.
+     * @param category Nama kategori untuk filter.
+     * @param btn Tombol yang diklik, untuk diatur menjadi aktif.
+     */
     private void filterByCategory(String category, Button btn) {
         setActiveCategory(btn);
         showProducts(allProducts.stream()
@@ -226,6 +286,10 @@ public class HomeController {
             .collect(Collectors.toList()));
     }
 
+    /**
+     * Mengatur style visual untuk tombol kategori yang aktif.
+     * @param activeBtn Tombol yang akan diberi style aktif.
+     */
     private void setActiveCategory(Button activeBtn) {
         forYouBtn.getStyleClass().setAll("soft-btn");
         skinCareBtn.getStyleClass().setAll("soft-btn");
@@ -235,6 +299,9 @@ public class HomeController {
         activeBtn.getStyleClass().setAll("category-btn-active");
     }
 
+    /**
+     * Membuka jendela keranjang belanja (cart.fxml) sebagai dialog modal.
+     */
     @FXML
     private void openCart() {
         try {
@@ -243,6 +310,7 @@ public class HomeController {
             CartController cartController = loader.getController();
             cartController.setCart(cart);
 
+            // Menambahkan aksi pada tombol checkout di dalam cart controller.
             cartController.getCheckoutBtn().setOnAction(e -> {
                 Stage cartStage = (Stage) cartController.getCheckoutBtn().getScene().getWindow();
                 cartStage.close();
@@ -253,7 +321,7 @@ public class HomeController {
             stage.setTitle("Keranjang Belanja");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            // --- PERUBAHAN: Refresh halaman utama saat keranjang ditutup ---
+            // Me-refresh halaman utama saat jendela keranjang ditutup.
             stage.setOnHidden(e -> refreshProducts());
             stage.show();
         } catch (IOException e) {
@@ -261,19 +329,23 @@ public class HomeController {
         }
     }
     
+    /**
+     * Membuka jendela checkout (checkout.fxml).
+     * Method ini dipanggil setelah tombol checkout di keranjang diklik.
+     */
     private void openCheckoutPage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/checkout.fxml"));
             Parent root = loader.load();
             CheckoutController checkoutController = loader.getController();
-            // Penting: kita membuat salinan keranjang untuk checkout, sehingga keranjang asli tidak terpengaruh sampai checkout selesai.
+            // Mengirim salinan keranjang ke halaman checkout.
             checkoutController.checkout(new ArrayList<>(cart), MainApp.currentUser.getId());
             
             Stage stage = new Stage();
             stage.setTitle("Checkout");
             stage.setScene(new Scene(root));
             
-            // --- PERBAIKAN UTAMA: Refresh & kosongkan keranjang setelah checkout ---
+            // Mengosongkan keranjang dan me-refresh produk setelah checkout selesai.
             stage.setOnHidden(e -> {
                 refreshProducts(); // 1. Update stok produk dari file
                 cart.clear();      // 2. Kosongkan keranjang belanja
@@ -287,6 +359,9 @@ public class HomeController {
         }
     }
 
+    /**
+     * Membuka jendela profil pengguna (profile.fxml) sebagai dialog modal.
+     */
     @FXML
     private void openProfile() {
         try {
@@ -305,7 +380,8 @@ public class HomeController {
     }
 
     /**
-     * Metode ini telah diperbarui untuk mengirimkan data produk DAN keranjang
+     * Membuka jendela detail untuk produk yang dipilih.
+     * Metode ini mengirimkan data produk DAN referensi keranjang
      * ke ProductDetailController.
      * @param product Produk yang akan ditampilkan.
      */
@@ -313,10 +389,9 @@ public class HomeController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/product_detail.fxml"));
             Parent root = loader.load();
-
-            // --- PERUBAHAN UTAMA DI SINI ---
+            
             ProductDetailController controller = loader.getController();
-            // Mengirimkan objek produk dan juga referensi ke keranjang belanja saat ini
+            // Mengirimkan objek produk dan referensi ke keranjang belanja saat ini.
             controller.initializeDetails(product, this.cart);
             
             Stage detailStage = new Stage();
@@ -324,8 +399,7 @@ public class HomeController {
             detailStage.setScene(new Scene(root));
             detailStage.initModality(Modality.APPLICATION_MODAL);
             
-            // Menambahkan listener agar saat jendela detail ditutup, halaman utama di-refresh
-            // untuk menyinkronkan status keranjang.
+            // Me-refresh halaman utama saat jendela detail ditutup.
             detailStage.setOnHidden(e -> refreshProducts());
             
             detailStage.show();
@@ -334,6 +408,10 @@ public class HomeController {
         }
     }
 
+    /**
+     * Menangani proses logout pengguna.
+     * Mengosongkan data pengguna saat ini dan kembali ke halaman login.
+     */
     @FXML
     private void handleLogout() {
         try {

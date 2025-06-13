@@ -37,14 +37,11 @@
                     </ImageView>
                 </StackPane>
 
-                <HBox alignment="BASELINE_LEFT">
-                    <Label text="Password" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Hyperlink onAction="#handleForgotPassword" style="-fx-text-fill: #ff6666; -fx-border-color: transparent; -fx-font-size: 12px;" text="Forgot Password?" />
-                </HBox>
+                <Label text="Password" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                
                 <StackPane>
-                     <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e0e0e0; -fx-background-color: #f7f7f7; -fx-padding: 10px 10px 10px 40px;"/>
-                     <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e0e0e0; -fx-background-color: #f7f7f7; -fx-padding: 10px 10px 10px 40px;"/>
+                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                         <image>
                             <Image url="@../images/password-icon.png" />
                         </image>
@@ -70,7 +67,7 @@
             <children>
                 <ImageView fitWidth="220" fitHeight="220" pickOnBounds="true" preserveRatio="true">
                     <image>
-                         <Image url="@../images/shopping-cart.png"/>
+                        <Image url="@../images/shopping-cart.png"/>
                     </image>
                 </ImageView>
                 <Text text="Belanja mudah dan cepat!" style="-fx-font-size: 18px; -fx-fill: #ff6666; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="200.0"/>

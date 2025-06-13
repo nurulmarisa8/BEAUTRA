@@ -52,8 +52,14 @@ public class SellerDashboardController {
     // 2. INISIALISASI
     //======================================================================
 
+    /**
+     * Method yang dieksekusi secara otomatis saat FXML selesai dimuat.
+     * Mengatur bagaimana data ditampilkan di ListView dan TableView, serta
+     * memuat data awal produk dan pesanan.
+     */
     @FXML
     public void initialize() {
+        // Mengatur tampilan kustom untuk setiap item di daftar produk.
         productList.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Product product, boolean empty) {
@@ -66,12 +72,14 @@ public class SellerDashboardController {
             }
         });
 
+        // Menghubungkan setiap kolom di tabel pesanan dengan properti di kelas OrderRow.
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
         totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        // Memuat data awal untuk ditampilkan.
         loadSellerProducts();
         loadOrdersForSeller();
     }
@@ -80,6 +88,10 @@ public class SellerDashboardController {
     // 3. LOGIKA MEMUAT DATA
     //======================================================================
 
+    /**
+     * Memuat produk-produk yang dimiliki oleh seller yang sedang login
+     * dan menampilkannya di ListView.
+     */
     private void loadSellerProducts() {
         if (MainApp.currentUser == null) return;
         List<Product> sellerProducts = productService.getAllProducts().stream()
@@ -88,15 +100,21 @@ public class SellerDashboardController {
         productList.setItems(FXCollections.observableArrayList(sellerProducts));
     }
 
+    /**
+     * Memuat semua pesanan yang masuk untuk produk yang dimiliki oleh seller
+     * yang sedang login dan menampilkannya di TableView.
+     */
     private void loadOrdersForSeller() {
         ObservableList<OrderRow> data = FXCollections.observableArrayList();
         if (MainApp.currentUser == null) return;
         String currentSellerId = MainApp.currentUser.getId();
         List<Order> allOrders = orderService.getAllOrders();
 
+        // Iterasi melalui setiap pesanan dan item di dalamnya.
         for (Order order : allOrders) {
             for (CartItem item : order.getItems()) {
                 Product product = productService.getProductById(item.getProductId());
+                // Jika produk ada dan dimiliki oleh seller ini, tambahkan ke tabel.
                 if (product != null && currentSellerId.equals(product.getSellerId())) {
                     data.add(new OrderRow(
                             order.getId(),
@@ -115,6 +133,11 @@ public class SellerDashboardController {
     // 4. DIALOG TAMBAH & EDIT
     //======================================================================
 
+    /**
+     * Menampilkan dialog untuk menambah produk baru.
+     * Method ini membangun form, menangani input pengguna, melakukan validasi,
+     * dan akhirnya menyimpan produk baru jika semua data valid.
+     */
     @FXML
     public void showAddProductDialog() {
         Dialog<Product> dialog = new Dialog<>();
@@ -198,7 +221,6 @@ public class SellerDashboardController {
 
         dialog.getDialogPane().setContent(grid);
 
-        // --- PERUBAHAN UTAMA UNTUK VALIDASI ---
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 
@@ -241,6 +263,11 @@ public class SellerDashboardController {
         });
     }
 
+    /**
+     * Menampilkan dialog untuk mengedit produk yang dipilih dari daftar.
+     * Method ini mengambil data produk yang ada, menampilkannya di form,
+     * memungkinkan pengguna mengubahnya, lalu menyimpan pembaruan.
+     */
     @FXML
     public void showEditProductDialog() {
         Product selectedProduct = productList.getSelectionModel().getSelectedItem();
@@ -326,7 +353,6 @@ public class SellerDashboardController {
 
         dialog.getDialogPane().setContent(grid);
 
-        // --- PERUBAHAN UTAMA UNTUK VALIDASI ---
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
 
@@ -365,16 +391,21 @@ public class SellerDashboardController {
         
         Optional<Product> result = dialog.showAndWait();
         result.ifPresent(updatedProduct -> {
-            productService.updateProduct(updatedProduct.getId(), updatedProduct);
+            // Memanggil updateProduct dengan satu argumen, sesuai perbaikan sebelumnya
+            productService.updateProduct(updatedProduct);
             loadSellerProducts();
             AlertUtil.showInfo("Produk berhasil diupdate!");
         });
     }
 
     //======================================================================
-    // 5. METODE LAINNYA
+    // 5. LOGIKA HAPUS PRODUK & LOGOUT
     //======================================================================
 
+    /**
+     * Menghapus produk yang dipilih dari daftar.
+     * Menampilkan dialog konfirmasi sebelum menghapus.
+     */
     @FXML
     public void deleteProduct() {
         Product selectedProduct = productList.getSelectionModel().getSelectedItem();
@@ -393,6 +424,10 @@ public class SellerDashboardController {
         });
     }
 
+    /**
+     * Menangani proses logout untuk seller.
+     * Mengosongkan data pengguna saat ini dan kembali ke halaman login.
+     */
     @FXML
     private void handleLogout() {
         MainApp.currentUser = null;
@@ -406,11 +441,23 @@ public class SellerDashboardController {
         }
     }
 
+    /**
+     * Kelas dalam (inner class) statis untuk merepresentasikan satu baris data
+     * dalam tabel pesanan. Kelas ini berfungsi sebagai model data untuk TableView.
+     */
     public static class OrderRow {
         private final String orderId, productName, status;
         private final int qty;
         private final double total;
 
+        /**
+         * Konstruktor untuk membuat objek OrderRow baru.
+         * @param orderId ID pesanan.
+         * @param productName Nama produk dalam pesanan.
+         * @param qty Kuantitas produk.
+         * @param total Total harga untuk item tersebut.
+         * @param status Status pesanan.
+         */
         public OrderRow(String orderId, String productName, int qty, double total, String status) {
             this.orderId = orderId;
             this.productName = productName;
@@ -419,6 +466,8 @@ public class SellerDashboardController {
             this.total = total;
         }
 
+        // Getter-getter di bawah ini PENTING karena digunakan oleh PropertyValueFactory
+        // untuk mengambil data dan menampilkannya di setiap sel tabel.
         public String getOrderId() { return orderId; }
         public String getProductName() { return productName; }
         public String getStatus() { return status; }

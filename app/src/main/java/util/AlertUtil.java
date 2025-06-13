@@ -3,27 +3,30 @@ package util;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 
+/**
+ * Kelas utilitas untuk menampilkan dialog notifikasi (Alert) yang seragam
+ * di seluruh aplikasi.
+ */
 public class AlertUtil {
 
+    /**
+     * Menampilkan dialog informasi (Information Alert) dengan gaya (style) kustom.
+     * @param message Pesan yang akan ditampilkan di dalam dialog.
+     */
     public static void showInfo(String message) {
-        // Membuat alert seperti biasa
+        // Membuat alert standar JavaFX.
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informasi");
-        alert.setHeaderText(null); // Menghilangkan header default agar lebih bersih
+        alert.setHeaderText(null); // Menghilangkan teks header default.
         alert.setContentText(message);
 
-        // ===================================================================
-        // PERBAIKAN UTAMA: Menerapkan CSS ke Dialog Alert
-        // ===================================================================
+        // Menerapkan file CSS kustom ke panel dialog.
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
             AlertUtil.class.getResource("/css/style.css").toExternalForm());
         dialogPane.getStyleClass().add("custom-alert");
-
-        // Mengatur agar window alert memiliki icon aplikasi (jika diinginkan)
-        // Anda bisa menambahkan icon di sini jika punya, contoh:
-        // stage.getIcons().add(new Image(AlertUtil.class.getResourceAsStream("/images/logo.png")));
         
+        // Menampilkan dialog dan menunggu sampai pengguna menutupnya.
         alert.showAndWait();
     }
 }

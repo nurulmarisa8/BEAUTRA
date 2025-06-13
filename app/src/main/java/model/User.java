@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Kelas model yang merepresentasikan seorang pengguna (User) dalam aplikasi.
+ * Berisi semua informasi terkait pengguna, seperti detail pribadi dan peran.
+ */
 public class User {
     private String id;
     private String fullname;
@@ -10,6 +14,17 @@ public class User {
     private String address;
     private String role;
 
+    /**
+     * Konstruktor untuk membuat objek User baru.
+     * @param id ID unik pengguna.
+     * @param fullname Nama lengkap pengguna.
+     * @param email Alamat email pengguna (untuk login).
+     * @param phone Nomor telepon pengguna.
+     * @param password Kata sandi pengguna (untuk login).
+     * @param gender Jenis kelamin pengguna.
+     * @param address Alamat pengguna.
+     * @param role Peran pengguna dalam aplikasi (misal: "buyer" atau "seller").
+     */
     public User(String id, String fullname, String email, String phone, String password, String gender, String address, String role) {
         this.id = id;
         this.fullname = fullname;
@@ -21,6 +36,8 @@ public class User {
         this.role = role;
     }
 
+    // --- GETTERS (Menyediakan akses baca ke properti pengguna) ---
+
     public String getId() { return id; }
     public String getFullname() { return fullname; }
     public String getEmail() { return email; }
@@ -30,9 +47,4 @@ public class User {
     public String getAddress() { return address; }
     public String getRole() { return role; }
 
-
-    public void setId(String id) { this.id = id; }
 }
-
-    
-

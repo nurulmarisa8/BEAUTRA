@@ -20,13 +20,19 @@ import java.util.List;
 
 public class CartController {
     @FXML private VBox cartBox;
-    // cartTotalLabel tidak lagi diperlukan di FXML baru, jadi bisa diabaikan
     @FXML private Label cartTotalValue;
     @FXML private Button checkoutBtn;
 
     private final List<CartItem> cart = new ArrayList<>();
     private final ProductService productService = new ProductService();
 
+    /**
+     * Menginisialisasi atau memperbarui data keranjang (cart) dari controller lain.
+     * Method ini membuat salinan dari item keranjang yang diterima untuk memastikan
+     * data di controller ini terisolasi, lalu memanggil updateCartBox() untuk
+     * me-render ulang tampilan UI.
+     * @param cartData List CartItem yang akan ditampilkan.
+     */
     public void setCart(List<CartItem> cartData) {
         cart.clear();
         for (CartItem ci : cartData) {
@@ -35,30 +41,33 @@ public class CartController {
         updateCartBox();
     }
     
-    // METODE INI TELAH DIPERBARUI DENGAN PERBAIKAN
+    /**
+     * Merender ulang seluruh tampilan visual dari keranjang belanja.
+     * Method ini akan membersihkan tampilan lama, lalu menampilkan pesan jika keranjang kosong
+     * atau membuat ulang setiap baris item produk (gambar, nama, harga, tombol kuantitas)
+     * jika keranjang berisi item. Method ini juga menghitung dan menampilkan total harga.
+     */
     private void updateCartBox() {
         cartBox.getChildren().clear();
         double total = 0;
 
-        // ===================================================================
-        // PERBAIKAN UTAMA ADA DI SINI
-        // ===================================================================
+        // Jika keranjang kosong, tampilkan pesan dan nonaktifkan tombol checkout.
         if (cart.isEmpty()) {
             Label emptyLabel = new Label("Keranjang Anda masih kosong.");
             emptyLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #888888;");
             cartBox.getChildren().add(emptyLabel);
             cartBox.setAlignment(Pos.CENTER);
             cartTotalValue.setText("Rp0");
-            checkoutBtn.setDisable(true); // Menonaktifkan tombol jika keranjang kosong
+            checkoutBtn.setDisable(true); 
             return;
         }
 
-        // Jika sampai di sini, artinya keranjang tidak kosong, maka tombol diaktifkan
+        // Jika keranjang tidak kosong, aktifkan tombol checkout dan atur alignment.
         checkoutBtn.setDisable(false);
-        cartBox.setAlignment(Pos.TOP_LEFT); // Kembalikan alignment jika tidak kosong
+        cartBox.setAlignment(Pos.TOP_LEFT); 
 
+        // Loop melalui setiap item di keranjang untuk membuat baris tampilannya.
         for (CartItem ci : cart) {
-            // Menggunakan getProductById agar lebih efisien
             Product p = productService.getProductById(ci.getProductId());
 
             HBox row = new HBox(15);
@@ -69,6 +78,7 @@ public class CartController {
             img.setFitWidth(70);
             img.setFitHeight(70);
             
+            // Memuat gambar produk, atau gambar default jika gagal atau tidak ada.
             if (p != null && p.getImage() != null && !p.getImage().isEmpty()) {
                 try {
                     String imagePath = p.getImage().startsWith("/") ? p.getImage() : "/" + p.getImage();
@@ -79,11 +89,13 @@ public class CartController {
             } else {
                  img.setImage(new Image(getClass().getResourceAsStream("/images/default-product.png")));
             }
+            // Membuat gambar memiliki sudut melengkung.
             Rectangle clip = new Rectangle(70, 70);
             clip.setArcWidth(10);
             clip.setArcHeight(10);
             img.setClip(clip);
 
+            // Membuat VBox untuk menampung nama dan harga produk.
             VBox info = new VBox(5);
             Label name = new Label(p != null ? p.getName() : "Produk tidak ditemukan");
             name.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;");
@@ -93,9 +105,11 @@ public class CartController {
             price.setStyle("-fx-font-size: 14px; -fx-text-fill: #ff6666;");
             info.getChildren().addAll(name, price);
 
+            // Region digunakan untuk mendorong kontrol kuantitas ke sisi kanan.
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
 
+            // Membuat kontrol kuantitas (tombol -, jumlah, tombol +).
             HBox qtyBox = new HBox(10);
             qtyBox.setAlignment(Pos.CENTER);
             Button minus = new Button("−");
@@ -106,9 +120,9 @@ public class CartController {
             minus.setStyle(buttonStyle);
             plus.setStyle(buttonStyle);
             
-            // Perbaikan untuk memastikan teks jumlah terlihat
             qty.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;");
 
+            // Aksi untuk tombol minus: mengurangi kuantitas atau menghapus item.
             minus.setOnAction(e -> {
                 if (ci.getQuantity() > 1) {
                     ci.setQuantity(ci.getQuantity() - 1);
@@ -117,6 +131,7 @@ public class CartController {
                 }
                 updateCartBox();
             });
+            // Aksi untuk tombol plus: menambah kuantitas jika stok masih ada.
             plus.setOnAction(e -> {
                 if (p != null && ci.getQuantity() < p.getStock()) {
                     ci.setQuantity(ci.getQuantity() + 1);
@@ -133,10 +148,22 @@ public class CartController {
         cartTotalValue.setText("Rp" + String.format("%,.0f", total));
     }
 
+    /**
+     * Mengembalikan list item yang saat ini ada di dalam keranjang.
+     * Method ini digunakan untuk mengirim data keranjang ke halaman checkout.
+     * @return List dari CartItem.
+     */
     public List<CartItem> getCart() {
         return cart;
     }
 
+    /**
+     * Mengembalikan instance dari tombol checkout.
+     * Method ini memungkinkan controller lain (seperti HomeController) untuk
+     * mengakses tombol ini dan menambahkan event handler, misalnya untuk membuka
+     * halaman checkout.
+     * @return Button checkout.
+     */
     public Button getCheckoutBtn() {
         return checkoutBtn;
     }
