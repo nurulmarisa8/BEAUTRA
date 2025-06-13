@@ -1,0 +1,231 @@
+.root {
+    -fx-background-color: #ffcccc;
+    background-color: #ffcccc;
+}
+
+.card {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-background-radius: 22;
+    -fx-effect: dropshadow(gaussian, #fcb0b1, 18, 0.18, 0, 8);
+}
+
+.soft-btn, .category-btn-active {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-background-radius: 24;
+    
+    /* PERBAIKAN: Menambahkan border-radius agar simetris */
+    -fx-border-radius: 24; 
+    border-radius: 24%;
+
+    -fx-font-size: 18px;
+    font-size: 18px;
+    -fx-text-fill: #ff6666;
+    color: #ff6666;
+    -fx-font-weight: normal;
+    font-weight: normal;
+    -fx-border-color: #ff6666;
+    border-color: #ff6666;
+    -fx-border-width: 2px;
+    border-width: 2px;
+    -fx-effect: dropshadow(gaussian, #ffcccc, 6, 0.12, 0, 2);
+    -fx-min-width: 110px;
+    min-width: 110px;
+    -fx-pref-width: 120px;
+    -fx-padding: 6 18 6 18;
+    padding: 6px 18px;
+    
+    /* Menghilangkan border saat tombol di-klik */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.soft-btn {
+    -fx-background-color: #eeeeee;
+    background-color: #eeeeee;
+    -fx-font-weight: normal;
+    font-weight: normal;
+}
+
+.soft-btn:hover, .soft-btn:focused {
+    -fx-background-color: #ffeaea;
+    background-color: #ffeaea;
+    -fx-effect: dropshadow(gaussian, #ffb3b3, 10, 0.18, 0, 4);
+    -fx-cursor: hand;
+    cursor: hand;
+}
+
+.category-btn-active {
+    -fx-background-color: #fff6f2;
+    background-color: #fff6f2;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 204, 204, 0.5), 10, 0, 0, 4);
+}
+
+.category-btn-active:hover, .category-btn-active:focused {
+    -fx-background-color: #ffeaea;
+    background-color: #ffeaea;
+    -fx-effect: dropshadow(gaussian, #ff9999, 16, 0.22, 0, 6);
+    -fx-cursor: hand;
+    cursor: hand;
+}
+
+/* PERBAIKAN UTAMA UNTUK TOMBOL IKON */
+.cart-btn {
+    -fx-background-color: #ffffff;
+    background-color: #ffffff;
+    -fx-background-radius: 50; /* Radius besar untuk memastikan bentuk lingkaran */
+    -fx-border-radius: 50;     /* Menyamakan radius border */
+    border-radius: 50%;
+    -fx-pref-width: 44px;      /* Ukuran lebar tetap */
+    -fx-pref-height: 44px;     /* Ukuran tinggi tetap */
+    -fx-padding: 8px;          /* Padding agar ikon di tengah */
+    padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 3); /* Efek bayangan */
+    -fx-cursor: hand;          /* Mengubah kursor menjadi tangan saat disentuh */
+    cursor: hand;
+}
+
+.cart-btn:hover {
+    -fx-background-color: #fff6f2; /* Warna berubah saat disentuh mouse */
+    background-color: #fff6f2;
+    -fx-effect: dropshadow(gaussian, rgba(255,102,102,0.2), 15, 0, 0, 4); /* Bayangan lebih jelas */
+}
+
+/* =================================================================== */
+/* Styling untuk Halaman Checkout                                      */
+/* =================================================================== */
+
+.content-card {
+    -fx-background-color: white;
+    background-color: white;
+    -fx-background-radius: 18;
+    -fx-padding: 25px;
+    padding: 25px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.header-title {
+    -fx-font-size: 24px;
+    font-size: 24px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #ff6666;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #555;
+}
+
+.form-input {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-background-color: white;
+    background-color: white;
+    -fx-border-color: #cccccc;
+    border-color: #cccccc;
+    -fx-border-radius: 8;
+    border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10px;
+    padding: 10px;
+}
+.form-input:focused {
+    -fx-border-color: #ff6666;
+    border-color: #ff6666;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 102, 0.3), 10, 0, 0, 0);
+}
+
+.summary-box {
+    -fx-background-color: #fafafa;
+    background-color: #fafafa;
+    -fx-border-color: #eeeeee;
+    border-color: #eeeeee;
+    -fx-border-width: 1;
+    border-width: 1px;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    border-radius: 8;
+    -fx-padding: 15;
+    padding: 15px;
+}
+
+.checkout-button {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 8px 15px;
+    padding: 8px 15px;
+    -fx-font-size: 16px;
+    font-size: 16px;
+    -fx-cursor: hand;
+    cursor: hand;
+}
+.checkout-button:hover {
+    -fx-background-color: #e65c5c;
+    background-color: #e65c5c;
+}
+
+/* =================================================================== */
+/* Styling untuk Notifikasi / Alert Dialog                             */
+/* =================================================================== */
+
+.custom-alert {
+    -fx-background-color: #fcfcfc; /* Warna latar dialog */
+    background-color: #fcfcfc;
+    -fx-border-width: 1px;
+    border-width: 1px;
+    -fx-border-color: #ffcccc;
+    border-color: #ffcccc;
+}
+
+/* Mengatur header panel (meskipun teksnya kita hilangkan, warnanya tetap ada) */
+.custom-alert .header-panel {
+    -fx-background-color: #fff6f2;
+    background-color: #fff6f2;
+}
+
+/* Mengatur ikon "i" bawaan */
+.custom-alert .header-panel .label.graphic-container {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-shape: "M 100 100 A 50 50 0 1 1 100 101 Z"; /* Membuatnya bulat */
+    -fx-padding: 10px;
+    padding: 10px;
+}
+
+/* Mengatur teks pesan utama */
+.custom-alert .content.label {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+/* Mengatur tombol "OK" */
+.custom-alert .button {
+    -fx-background-color: #ff6666;
+    background-color: #ff6666;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    cursor: hand;
+    -fx-pref-width: 90px;
+}
+
+.custom-alert .button:hover {
+    -fx-background-color: #e65c5c; /* Warna saat disentuh mouse */
+    background-color: #e65c5c;
+}
